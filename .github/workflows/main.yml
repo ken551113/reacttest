@@ -1,15 +1,15 @@
 name: deploy gh-pages
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 jobs:
   build:
     name: Build and deploy gh-pages
     env:
-      MY_SECRET   : ${{secrets.repotoken}}
-      USER_NAME   : ken551113
-      USER_EMAIL  : ken551113@gmail.com
-      PUBLISH_DIR : ./dist
+      MY_SECRET: ${{secrets.repotoken}}
+      USER_NAME: ken551113
+      USER_EMAIL: ken551113@gmail.com
+      PUBLISH_DIR: ./dist
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "16"
 
       # Runs a single command using the runners shell
       - name: install dependencies
@@ -30,16 +30,16 @@ jobs:
       - name: try to build the project
         run: npm run build
 
-	    - name: Commit files
-	      run: |
-	        cd $PUBLISH_DIR
-	        git init
-	        git config --local user.name $USER_NAME
-	        git config --local user.email $USER_EMAIL
-	        git status
-	        git remote add origin https://$MY_SECRET@github.com/$GITHUB_REPOSITORY.git
-	        git checkout -b gh-pages
-	        git add --all
-	        git commit -m "deploy to Github pages"
-	        git push origin gh-pages -f
-	        echo 🤘 deploy gh-pages complete.
+      - name: Commit files
+        run: |
+          cd $PUBLISH_DIR
+          git init
+          git config --local user.name $USER_NAME
+          git config --local user.email $USER_EMAIL
+          git status
+          git remote add origin https://$MY_SECRET@github.com/$GITHUB_REPOSITORY.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "deploy to Github pages"
+          git push origin gh-pages -f
+          echo 🤘 deploy gh-pages complete.
